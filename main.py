@@ -1,10 +1,11 @@
 from datetime import datetime
-from utils import value, date, category, account, tipoTransaction, payment, tags
+from utils import value, date, category, account, tipoTransaction, payment, tags, listing
+import pandas as pd
 menu =''
+transacao = None
+transacoes = pd.DataFrame()
 
-
-
-while menu != 0:
+while menu != 0: #Nas opções, futuramente fazer um menu opcional organizado caso seja necessário
     menu = (int(input("""                                 ===  DurelliLedger ===
                         1- Adicionar transação
                         2- Listar transações
@@ -20,8 +21,27 @@ while menu != 0:
         conta = account()
         valor = value()
         formaPagamento = payment()
-        tag = tags(categoria, tipo)
+        tag = tags(tipo, categoria)
         criadoEm = datetime.today()
+
+        transacao = {
+                'DATA': data,
+                'TIPO' : tipo,
+                'DESCRICAO' : descricao,
+                'CATEGORIA' : categoria,
+                'CONTA' : conta,
+                'VALOR' : valor,
+                'FORMA DE PAGAMENTO' : formaPagamento,
+                'TAG' : tag,
+                'CRIADO EM' : criadoEm
+        }
+        dadosNovos= pd.DataFrame(transacao)
+        transacoes= pd.concat([transacoes, dadosNovos])
+        coluna_nome = 'data'
+        transacoes.iloc[2][coluna_nome] = valor-novo
+
+
     if menu == 2:
-        list(EXTRATO)
+        listing(transacao)
     
+    if menu == 3:

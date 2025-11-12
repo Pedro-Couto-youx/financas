@@ -2,7 +2,9 @@ import datetime
 from unidecode import unidecode
 extrato = []
 def removerAcento(a):
-    return unidecode(a)
+    semacento= unidecode(a)
+    print(semacento)
+    return semacento
 
 def value():
     while True:
@@ -79,12 +81,14 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
     if tipoTransacao == 'DESPESA':
         if categoriaTransacao == 'ALIMENTAÇÃO':
             alimentacao = ['SUPERMERCADO', 'COMPRA MENSAL', 'PROMOÇÃO']
-            tag= str(input('Adicione uma tag para esta transação: [SUPERMERCADO, COMPRA MENSAL, PROMOÇÃO]').upper())
+            tag= str(input('Adicione uma tag para esta transação: [SUPERMERCADO, COMPRA MENSAL, PROMOCAO]').upper())
             tagCorrigida = removerAcento(tag)
             if tagCorrigida not in alimentacao:
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [SUPERMERCADO, COMPRA MENSAL, PROMOÇÃO]'))
                 tagCorrigida= removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'MORADIA':
             moradia = ['ALUGUEL', 'CONDOMINIO', 'IPTU', 'SEGURO RESIDENCIAL', 'FINANCIAMENTO', 'PRESTACAO DA CASA']
@@ -94,6 +98,9 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag= str(input('Adicione uma tag para esta transação: [ALUGUEL, CONDOMINIO, IPTU, SEGURO RESIDENCIAL, FINANCIAMENTO, PRESTACAO DA CASA]').upper())
                 tagCorrigida = removerAcento(tag)
+                return print('Tag adicionada com sucesso!')
+            
+
 
         if categoriaTransacao == 'TRANSPORTE':
             transporte = ['COMBUSTIVEL', 'ESTACIONAMENTO', 'PEDAGIO', 'SEGURO VEICULAR', 'IPVA', 'LICENCIAMENTO', 'FINANCIAMENTO DO CARRO']
@@ -103,6 +110,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag= str(input('Adicione uma tag para esta transação: [COMBUSTIVEL, ESTACIONAMENTO, PEDAGIO, SEGURO VEICULAR, IPVA, LICENCIAMENTO, FINANCIAMENTO DO CARRO]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'SAÚDE':
             saude = ['CONSULTA MEDICA', 'EXAMES LABORATORIAIS', 'MEDICAMENTOS', 'HOSPITALIZACAO', 'CIRURGIA', 'ANESTESIA', 'EMERGENCIA', 'MATERIAIS HOSPITALARES', 'DENTISTA', 'LIMPEZA DENTARIA', 'ORTODONTIA', 'PROTESE DENTARIA', 'CIRURGIA BUCAL', 'OCULOS', 'LENTES DE CONTATO', 'CONSULTA OFTAMOLOGISTA', 'EXAME DE VISAO', 'APARELHO AUDITIVO', 'TERAPIA', 'PSICOLOGO', 'NUTRICIONISTA', 'ACADEMIA', 'PILATES', 'FISIOTERAPIA', 'MASSAGEM', 'CHECKUP ANUAL', 'PLANO DE SAUDE', 'PLANO ODONTO', 'SEGURO SAUDE', 'COPARTICIPACAO', 'VACINAS']
@@ -112,6 +121,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag= str(input('Adicione uma tag para esta transação: [CONSULTA MEDICA, EXAMES LABORATORIAIS, MEDICAMENTOS, HOSPITALIZACAO, CIRURGIA, ANESTESIA, EMERGENCIA, MATERIAIS HOSPITALARES, DENTISTA, LIMPEZA DENTARIA, ORTODONTIA, PROTESE DENTARIA, CIRURGIA BUCAL, OCULOS, LENTES DE CONTATO, CONSULTA OFTAMOLOGISTA, EXAME DE VISAO, APARELHO AUDITIVO, TERAPIA, PSICOLOGO, NUTRICIONISTA, ACADEMIA, PILATES, FISIOTERAPIA, MASSAGEM, CHECKUP ANUAL, PLANO DE SAUDE, PLANO ODONTO, SEGURO SAUDE, COPARTICIPACAO, VACINAS]').upper())
                 tagCorrigida= removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'EDUCAÇÃO':
             educacao = ['MENSALIDADE ESCOLAR', 'MENSALIDADE FACULDADE', 'CURSO TÉCNICO', 'MATERIAL DIDATICO', 'UNIFORME', 'TRANSPORTE ESCOLAR', 'ALIMENTACAO ESCOLAR', 'TAXA DE MATRICULA', 'TAXA DE RECUPERAÇÃO', 'AULAS DE REFORÇO', 'CURSOS ONLINE', 'CURSOS PROFISSIONALIZANTES', 'CERTIFICACAO', 'INSCRICAO EM EVENTOS', 'MATERIAL DO CURSO', 'PLATAFORMA DE ASSINATURA', 'LIVROS', 'REVISTAS ACADEMICAS', 'EBOOKS', 'CRECHE', 'ATIVIDADE EXTRACURRICULAR', 'PASSEIO ESCOLAR', 'PALESTRAS', 'MENTORIA', 'COACHING']
@@ -121,6 +132,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [MENSALIDADE ESCOLAR, MENSALIDADE FACULDADE, CURSO TÉCNICO, MATERIAL DIDATICO, UNIFORME, TRANSPORTE ESCOLAR, ALIMENTACAO ESCOLAR, TAXA DE MATRICULA, TAXA DE RECUPERAÇÃO, AULAS DE REFORÇO, CURSOS ONLINE, CURSOS PROFISSIONALIZANTES, CERTIFICACAO, INSCRICAO EM EVENTOS, MATERIA DO CURSO, PLATAFORMA DE ASSINATURA, LIVROS, REVISTAS ACADEMICAS, EBOOKS, CRECHE, ATIVIDADE EXTRACURRICULAR, PASSEIO ESCOLAR, PALESTRAS, MENTORIA, COACHING ').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'LAZER':
             lazer = ['CINEMA', 'TEATRO', 'SHOWS', 'EVENTOS', 'MUSEUS', 'PARQUE', 'STREAMING', 'GAMES', 'RESTAURANTE', 'BAR', 'CAFETERIA', 'DELIVERY', 'CHURRASCO', 'FESTAS', 'VIAGEM', 'AIRBNB', 'FOTOGRAFIAS', 'JARDINAGEM', 'ANIMAIS DE ESTIMACAO', 'CLUBE', 'ACADEMIA']
@@ -130,7 +143,9 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [CINEMA, TEATRO, SHOWS, EVENTOS, MUSEUS, PARQUE, STREAMING, GAMES, RESTAURANTE, BAR, CAFETERIA, DELIVERY, CHURRASCO, FESTAS, VIAGEM, AIRBNB, FOTOGRAFIAS, JARDINAGEM, ANIMAIS DE ESTIMACAO, CLUBE, ACADEMIA]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
             
+
         if categoriaTransacao == 'ROUPAS':
             roupas = ['ROUPAS CASUAL', 'ROUPAS DE TRABALHO', 'ROUPAS ESPORTIVAS', 'ROUPAS DE FESTA', 'ROUPAS INFANTIS', 'ROUPAS DE INVERNO', 'CALCADOS', 'BOLSAS', 'CINTOS', 'RELOGIOS', 'JOIAS', 'BONES', 'OCULOS', 'LUVAS', 'LAVANDERIA', 'COSTURA', 'TINTURARIA', 'LIMPEZA DE CALCADOS']
             tag = str(input('Adicione uma tag para esta transação: [ROUPAS CASUAL, ROUPAS DE TRABALHO, ROUPAS ESPORTIVAS, ROUPAS DE FESTA, ROUPAS INFANTIS, ROUPAS DE INVERNO, CALCADOS, BOLSAS, CINTOS, RELOGIOS, JOIAS, BONES, OCULOS, LUVAS, LAVANDERIA, COSTURA, TINTURARIA, LIMPEZA DE CALCADOS').upper())
@@ -139,6 +154,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [ROUPAS CASUAL, ROUPAS DE TRABALHO, ROUPAS ESPORTIVAS, ROUPAS DE FESTA, ROUPAS INFANTIS, ROUPAS DE INVERNO, CALCADOS, BOLSAS, CINTOS, RELOGIOS, JOIAS, BONES, OCULOS, LUVAS, LAVANDERIA, COSTURA, TINTURARIA, LIMPEZA DE CALCADOS').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'HIGIENE PESSOAL':
             higiene = ['SABONETE', 'SHAMPOO', 'CONDICIONADOR', 'DESODORANTE', 'CREME DENTAL', 'FIO DENTAL', 'ESCOVA DE DENTE', 'PAPEL HIGIENICO', 'ABSORVENTES', 'LENCOS UMIDOS', 'CREMES', 'CORTE DE CABELO', 'BARBEIRO', 'MANICURE', 'PEDICURE', 'DEPILACAO', 'PRODUTOS PARA SKINCARE', 'MAQUIAGEM', 'PERFUME', 'COSMETICOS', 'SPA', 'TOALHAS', 'ROUPAS DE BANHO', 'ESCOVA DE CABELO', 'LAMINAS DE BARBEAR', 'ITENS DE BANHEIRO']
@@ -148,6 +165,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuario, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [SABONETE, SHAMPOO, CONDICIONADOR, DESODORANTE, CREME DENTAL, FIO DENTAL, ESCOVA DE DENTE, PAPEL HIGIENICO, ABSORVENTES, LENCOS UMIDOS, CREMES, CORTE DE CABELO, BARBEIRO. MANICURE, PEDICURE, DEPILACAO, PRODUTOS PARA SKINCARE, MAQUIAGEM, PERFUME, COSMETICOS, SPA, TOALHAS, ROUPAS DE BANHO, ESCOVA DE CABELO, LAMINA DE BARBEAR, ITENS DE BANHEIRO]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'CONTAS':
             contas = ['ENERGIA', 'AGUA', 'GAS', 'INTERNET', 'CELULAR', 'ESGOTO', 'LIXO', 'ANUIDADE', 'JUROS', 'MULTAS', 'EMPRESTIMO', 'FINANCIAMENTO', 'SEGURO', 'LIMPEZA', 'SEGURANCA RESIDENCIAL']
@@ -157,7 +176,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [ENERGIA, AGUA, GAS, INTERNET, CELULAR, ESGOTO, LIXO, ANUIDADE, JUROS, MULTAS, EMPRESTIMO, FINANCIAMENTO, SEGURO, LIMPEZA, SEGURANCA RESIDENCIAL').upper())
                 tagCorrigida = removerAcento(tag)
-
+                return tagCorrigida
+                
         if categoriaTransacao == 'IMPOSTOS':
             impostos = ['ITR', 'IMPOSTO DE RENDA', 'INSS', 'CONTRIBUICAO SINDICAL', 'TAXA AUTONOMO', 'RETENCAO FONTE', 'MEI', 'ICMS', 'ISS', 'IPI', 'IOF', 'TARIFAS FISCAIS']
             tag = str(input('Adicione uma tag para esta transação: [ITR, IMPOSTO DE RENDA, INSS, CONTRIBUICAO SINDICAL, TAXA AUTONOMO, RETENCAO FONTE, MEI, ICMS, ISS IPI, IOF, TARIFAS FISCAIS]').upper())
@@ -166,6 +186,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [ITR, IMPOSTO DE RENDA, INSS, CONTRIBUICAO SINDICAL, TAXA AUTONOMO, RETENCAO FONTE, MEI, ICMS, ISS IPI, IOF, TARIFAS FISCAIS]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'DOACOES':
             doacoes = ['AJUDA PARA FAMILIA', 'AJUDA PRA AMIGOS', 'PRESENTEAMENTOS', 'SOCORRO EMERGENCIAL', 'IGREJA', 'INSTITUICAO DE CARIDADE', 'PROJETO SOCIAL', 'ORFANATO', 'INSTITUICAO DE ANIMAIS', 'INSITITUICAO DE SAUDE', 'MEIO AMBIENTE', 'EDUCACAO']
@@ -175,6 +197,7 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor digite uma tag válida para esta categoria')
                 tag = str(input('Adicione uma tag para esta transação: [AJUDA PARA FAMILIA, AJUDA PARA AMIGOS, PRESENTEAMENTOS, SOCORRO EMERGENCIAL, IGREJA, INSTITUICAO DE CARIDADE, PROJETO SOCIAL, ORFANATO, INSTITUICAO DE ANIMAIS, INSTITUICAO DE SAUDE, MEIO AMBIENTE, EDUCACAO]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
 
     if tipoTransacao == 'RECEITA':
         categoriaTransacao = category(tipoTransacao)
@@ -186,6 +209,7 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor insira uma tag válida para esta categoria')
                 tag = str(input('Digite uma tag para esta transação: [EMPRESA, TRABALHO]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
 
         if categoriaTransacao == 'VENDA DE PRODUTOS':
             venda= ['ALIMENTOS', 'ROUPAS', 'ARTESANATO', 'ELETRONICOS', 'COSMETICOS', 'ACESSORIOS', 'DIGITAL']
@@ -195,6 +219,7 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor insira uma tag válida para esta categoria')
                 tag = str(input('Digite uma tag para esta transação: [ALIMENTOS, ROUPAS, ARTESANATO , ELETRONICOS ,COSMETICOS , ACESSORIOS, DIGITAL]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
 
         if categoriaTransacao == 'PRESTACAO DE SERVICOS':
             prestacao = ['CONSULTORIA', 'DESIGN', 'MANUTENÇÃO', 'AULAS', 'BELEZA', 'TRANSPORTE', 'FREELANCER', 'SUPORTE', 'ENTREGA']
@@ -204,7 +229,9 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor insira uma tag válida para esta categoria')
                 tag = str(input('Digite uma tag para esta transação: [CONSULTORIA, DESIGN, MANUTENÇÃO, AULAS, BELEZA, TRANSPORTE, FREELANCER, SUPORTE, ENTREGA]').upper())
                 tagCorrigida = removerAcento(tag)
-        
+                return tagCorrigida
+                
+
         if categoriaTransacao == 'INVESTIMENTOS':
             investimentos = ['RENDA FIXA', 'RENDA VARIAVEL', 'TESOURO DIRETO', 'ACOES', 'FUNDOS IMOBILIARIOS', 'CRIPTO', 'CDB', 'POUPANCA', 'ETFs']
             tag = str(input('Digite uma tag para esta transação: [RENDA FIXA, RENDA VARIAVEL, TESOURO DIRETO, ACOES, FUNDOS IMOBILIARIOS, CRIPTO, CDB, POUPANCA, ETFs]').upper())
@@ -213,6 +240,8 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor insira uma tag válida para esta categoria')
                 tag = str(input('Digite uma tag para esta transação: [RENDA FIXA, RENDA VARIAVEL, TESOURO DIRETO, ACOES, FUNDOS IMOBILIARIOS, CRIPTO, CDB, POUPANCA, ETFs]').upper())
                 tagCorrigida = removerAcento(tag)
+                return tagCorrigida
+
 
         if categoriaTransacao == 'REEMBOLSOS':
             reembolsos = ['EMPRESA', 'PLANO DE SAUDE', 'CLIENTE', 'AMIGO', 'GOVERNO', 'LOJA', 'BANCARIO']
@@ -222,4 +251,35 @@ def tags(tipoTransacao, categoriaTransacao): #FUTURAMENTE DIVIDIR AS TAGS ENTRE 
                 print('Caro usuário, por favor insira uma tag válida para esta categoria')
                 tag = str(input('Digite uma tag para esta transação: [EMPRESA, PLANO DE SAUDE, CLIENTE, AMIGO, GOVERNO, LOJA, BANCARIO]').upper())
                 tagCorrigida = removerAcento(tag)
-    return tagCorrigida
+                return tagCorrigida
+            
+def listing(transacao):
+    if transacao == None:
+        print('Por favor, insira uma transação válida antes de listar')
+    else:
+        print(transacao)
+
+
+def update(dataframe):
+    indice = int(input('Digite o id de sua transação: '))
+    colunas = ['DATA', 'TIPO', 'DESCRICAO', 'CATEGORIA', 'CONTA', 'VALOR', 'FORMA DE PAGAMENTO', 'TAG', 'CRIADO EM']
+    coluna = str(input('Digite qual coluna você deseja editar: [DATA, TIPO, DESCRICAO, CATEGORIA, CONTA, VALOR, FORMA DE PAGAMENTO, TAG, CRIADO EM]').upper())
+    colunaCorrigida = removerAcento(coluna)
+    if colunaCorrigida not in colunas:
+        print('Caro usuário, por favor digite uma coluna presente na transação')
+        indice = int(input('Digite o id de sua transação: '))
+        coluna = str(input('Digite qual coluna você deseja editar: [DATA, TIPO, DESCRICAO, CATEGORIA, CONTA, VALOR, FORMA DE PAGAMENTO, TAG, CRIADO EM]').upper())
+        colunaCorrigida = removerAcento(coluna)
+    if colunaCorrigida == 'DATA':
+         while True:
+            try:
+                data = input('Qual data você deseja atribuir à transação ')
+                dataCorreta = datetime.datetime.strptime(data, "%d/%m/%Y")
+                print('Data alterada com sucesso')
+                dataframe.iloc[indice][coluna] = data
+                print('Edição concluída')
+                print(dataframe.iloc[indice])
+            except ValueError:
+                print(f'Caro usuário, sua data não é válida, por favor insira uma data válida')
+    if colunaCorrigida == 'TIPO':
+        tipo = str(input('Qual tipo o'))
