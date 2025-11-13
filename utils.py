@@ -273,13 +273,60 @@ def update(dataframe):
     if colunaCorrigida == 'DATA':
          while True:
             try:
-                data = input('Qual data você deseja atribuir à transação ')
+                data = input('Qual data você deseja atribuir à transação? [XX/XX/XXXX] ')
                 dataCorreta = datetime.datetime.strptime(data, "%d/%m/%Y")
                 print('Data alterada com sucesso')
-                dataframe.iloc[indice][coluna] = data
+                dataframe.iloc[indice][coluna] = dataCorreta
                 print('Edição concluída')
                 print(dataframe.iloc[indice])
             except ValueError:
                 print(f'Caro usuário, sua data não é válida, por favor insira uma data válida')
+
     if colunaCorrigida == 'TIPO':
-        tipo = str(input('Qual tipo o'))
+        tipoLista = ['RECEITA', 'DESPESA']
+        tipo = str(input('Qual tipo você deseja atribuir à transação? [RECEITA|DESPESA]').upper())
+        tipoCorrigido = removerAcento(tipo)
+        if tipoCorrigido not in tipoLista:
+            print('Caro usuário, por favor insira um tipo válido!')
+            tipo = str(input('Qual tipo você deseja atribuir à transação? [RECEITA|DESPESA]').upper())
+            tipoCorrigido = removerAcento(tipo)
+        dataframe.iloc[indice][coluna] = tipoCorrigido
+        print('Tipo alterado com sucesso')
+        print(dataframe.iloc[indice])
+
+    if colunaCorrigida == 'DESCRICAO':
+        descricao = str(input('Qual descrição você deseja atribuir à transação? '))
+        dataframe.iloc[indice][coluna] = descricao
+        print('Descrição alterada com sucesso')
+        print(dataframe.iloc[indice])
+    
+    if colunaCorrigida == 'CATEGORIA':
+        tiposCategoria = ['RECEITA', 'DESPESA']
+        categoriasReceitas = ['SALÁRIO', 'VENDAS DE PRODUTOS', 'PRESTACAO DE SERVICOS', 'INVESTIMENTOS', 'REEMBOLSOS', 'OUTRAS RECEITAS']
+        categoriasDespesas = ['ALIMENTAÇÃO', 'MORADIA', 'TRANSPORTE', 'SAÚDE', 'EDUCAÇÃO', 'LAZER', 'ROUPAS', 'HIGIENE PESSOAL', 'CONTAS', 'IMPOSTOS', 'DOAÇÕES']
+        tipo = str(input('Qual o tipo da categoria? [RECEITA|DESPESA]').upper)
+        tiposCategoriaCorrigido= removerAcento(tipo)
+
+        if tiposCategoriaCorrigido not in tiposCategoria:
+            print('Caro usuário, digite um tipo de categoria válido!')
+            tipo = str(input('Qual o tipo da categoria? [RECEITA|DESPESA]'))
+            tiposCategoriaCorrigido = removerAcento(tipo)
+
+        if tiposCategoriaCorrigido == 'RECEITA':
+            categoria = str(input('Qual categoria você deseja atribuir à transação: [SALARIO, VENDAS DE PRODUTOS, PRESTACAO DE SERVICOS, INVESTIMENTOS, REEMBOLSOS, OUTRAS RECEITAS]').upper())
+            categoriaCorrigida = removerAcento(categoria)
+            if categoriaCorrigida not in categoriasReceitas:
+                print('Caro usuário, por favor insira uma categoria válida para o tipo receitas')
+                categoria = str(input('Qual categoria você deseja atribuir à transação: [SALARIO, VENDAS DE PRODUTOS, PRESTACAO DE SERVICOS, INVESTIMENTOS, REEMBOLSOS, OUTRAS RECEITAS]').upper())
+                categoriaCorrigida = removerAcento(categoria)
+
+        if tiposCategoriaCorrigido == 'DESPESA':
+            categoria = str(input('Qual categoria você deseja atribuir  à transação: [ALIMENTACAO, MORADIA, TRANSPORTE, SAUDE, EDUCACAO, LAZER, ROUPAS, HIGIENE PESSOAL, CONTAS, IMPOSTOS, DOACOES]').upper())
+            categoriaCorrigida = removerAcento(categoria)
+            if categoriaCorrigida not in categoriasDespesas:
+                print('Caro usuário, por favor insira uma categoria válida para o tipo despesas')
+                categoria = str(input('Qual categoria você deseja atribuir  à transação: [ALIMENTACAO, MORADIA, TRANSPORTE, SAUDE, EDUCACAO, LAZER, ROUPAS, HIGIENE PESSOAL, CONTAS, IMPOSTOS, DOACOES]').upper())
+                categoriaCorrigida = removerAcento(categoria)
+        dataframe.iloc[indice][coluna] = categoriaCorrigida
+        print('Categoria alterada com sucesso')
+        print(dataframe.iloc[indice])
