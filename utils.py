@@ -730,27 +730,36 @@ def listing(transacao):
 
 
 def update(dataframe):
-    while True:
-        if dataframe.empty:
-            print("Caro usuário, por favor adicione uma transação primeiro")
-            break
+    while dataframe.empty:
+        print("Caro usuário, por favor adicione uma transação primeiro")
+        break
 
+    indice = int(input("Digite o id de sua transação: "))
+    while indice < 0 or indice > (dataframe.shape[0] - 1):
+        print("Digite um id válido")
         indice = int(input("Digite o id de sua transação: "))
-        while indice < 0 or indice > (dataframe.shape[0] - 1):
-            print("Digite um id válido")
-            indice = int(input("Digite o id de sua transação: "))
 
-        colunas = [
-            "DATA",
-            "TIPO",
-            "DESCRICAO",
-            "CATEGORIA",
-            "CONTA",
-            "VALOR",
-            "FORMA DE PAGAMENTO",
-            "TAG",
-            "CRIADO EM",
-        ]
+    colunas = [
+        "DATA",
+        "TIPO",
+        "DESCRICAO",
+        "CATEGORIA",
+        "CONTA",
+        "VALOR",
+        "FORMA DE PAGAMENTO",
+        "TAG",
+        "CRIADO EM",
+    ]
+    coluna = str(
+        input(
+            "Digite qual coluna você deseja editar: [DATA, TIPO, DESCRICAO, CATEGORIA, CONTA, VALOR, FORMA DE PAGAMENTO, TAG, CRIADO EM]"
+        ).upper()
+    )
+    colunaCorrigida = removerAcento(coluna)
+
+    if colunaCorrigida not in colunas:
+        print("Caro usuário, por favor digite uma coluna presente na tabela")
+        indice = int(input("Digite o id de sua transação: "))
         coluna = str(
             input(
                 "Digite qual coluna você deseja editar: [DATA, TIPO, DESCRICAO, CATEGORIA, CONTA, VALOR, FORMA DE PAGAMENTO, TAG, CRIADO EM]"
@@ -758,216 +767,209 @@ def update(dataframe):
         )
         colunaCorrigida = removerAcento(coluna)
 
-        if colunaCorrigida not in colunas:
-            print("Caro usuário, por favor digite uma coluna presente na tabela")
-            indice = int(input("Digite o id de sua transação: "))
-            coluna = str(
-                input(
-                    "Digite qual coluna você deseja editar: [DATA, TIPO, DESCRICAO, CATEGORIA, CONTA, VALOR, FORMA DE PAGAMENTO, TAG, CRIADO EM]"
-                ).upper()
-            )
-            colunaCorrigida = removerAcento(coluna)
+    if colunaCorrigida == "DATA":
+        while True:
+            try:
+                data = input(
+                    "Qual data você deseja atribuir à transação? [XX/XX/XXXX] "
+                )
+                data = datetime.datetime.strptime(data, "%d/%m/%Y")
+                print("Data alterada com sucesso")
+                dataframe.loc[indice, coluna] = data
+                print("Edição concluída")
+                print(dataframe.iloc[indice])
+            except ValueError:
+                print(
+                    f"Caro usuário, sua data não é válida, por favor insira uma data válida"
+                )
 
-        if colunaCorrigida == "DATA":
-            while True:
-                try:
-                    data = input(
-                        "Qual data você deseja atribuir à transação? [XX/XX/XXXX] "
-                    )
-                    data = datetime.datetime.strptime(data, "%d/%m/%Y")
-                    print("Data alterada com sucesso")
-                    dataframe.loc[indice, coluna] = data
-                    print("Edição concluída")
-                    print(dataframe.iloc[indice])
-                except ValueError:
-                    print(
-                        f"Caro usuário, sua data não é válida, por favor insira uma data válida"
-                    )
-
-        if colunaCorrigida == "TIPO":
-            tipoLista = ["RECEITA", "DESPESA"]
+    if colunaCorrigida == "TIPO":
+        tipoLista = ["RECEITA", "DESPESA"]
+        tipo = str(
+            input(
+                "Qual tipo você deseja atribuir à transação? [RECEITA|DESPESA]"
+            ).upper()
+        )
+        tipoCorrigido = removerAcento(tipo)
+        if tipoCorrigido not in tipoLista:
+            print("Caro usuário, por favor insira um tipo válido!")
             tipo = str(
                 input(
                     "Qual tipo você deseja atribuir à transação? [RECEITA|DESPESA]"
                 ).upper()
             )
             tipoCorrigido = removerAcento(tipo)
-            if tipoCorrigido not in tipoLista:
-                print("Caro usuário, por favor insira um tipo válido!")
-                tipo = str(
-                    input(
-                        "Qual tipo você deseja atribuir à transação? [RECEITA|DESPESA]"
-                    ).upper()
-                )
-                tipoCorrigido = removerAcento(tipo)
-            dataframe.iloc[indice][coluna] = tipoCorrigido
-            print("Tipo alterado com sucesso")
-            print(dataframe.iloc[indice])
+        dataframe.loc[indice, coluna] = tipoCorrigido
+        print("Tipo alterado com sucesso")
+        print(dataframe.iloc[indice])
 
-        if colunaCorrigida == "DESCRICAO":
-            descricao = str(input("Qual descrição você deseja atribuir à transação? "))
-            dataframe.iloc[indice][coluna] = descricao
-            print("Descrição alterada com sucesso")
-            print(dataframe.iloc[indice])
+    if colunaCorrigida == "DESCRICAO":
+        descricao = str(input("Qual descrição você deseja atribuir à transação? "))
+        dataframe.loc[indice, coluna] = descricao
+        print("Descrição alterada com sucesso")
+        print(dataframe.iloc[indice])
 
-        if colunaCorrigida == "CATEGORIA":
-            tiposCategoria = ["RECEITA", "DESPESA"]
-            categoriasReceitas = [
-                "SALÁRIO",
-                "VENDAS DE PRODUTOS",
-                "PRESTACAO DE SERVICOS",
-                "INVESTIMENTOS",
-                "REEMBOLSOS",
-                "OUTRAS RECEITAS",
-            ]
-            categoriasDespesas = [
-                "ALIMENTACAO",
-                "MORADIA",
-                "TRANSPORTE",
-                "SAÚDE",
-                "EDUCACAO",
-                "LAZER",
-                "ROUPAS",
-                "HIGIENE PESSOAL",
-                "CONTAS",
-                "IMPOSTOS",
-                "DOACOES",
-            ]
-            tipo = str(input("Qual o tipo da categoria? [RECEITA|DESPESA]").upper)
+    if colunaCorrigida == "CATEGORIA":
+        tiposCategoria = ["RECEITA", "DESPESA"]
+        categoriasReceitas = [
+            "SALÁRIO",
+            "VENDAS DE PRODUTOS",
+            "PRESTACAO DE SERVICOS",
+            "INVESTIMENTOS",
+            "REEMBOLSOS",
+            "OUTRAS RECEITAS",
+        ]
+        categoriasDespesas = [
+            "ALIMENTACAO",
+            "MORADIA",
+            "TRANSPORTE",
+            "SAÚDE",
+            "EDUCACAO",
+            "LAZER",
+            "ROUPAS",
+            "HIGIENE PESSOAL",
+            "CONTAS",
+            "IMPOSTOS",
+            "DOACOES",
+        ]
+        tipo = str(input("Qual o tipo da categoria? [RECEITA|DESPESA]").upper)
+        tiposCategoriaCorrigido = removerAcento(tipo)
+
+        if tiposCategoriaCorrigido not in tiposCategoria:
+            print("Caro usuário, digite um tipo de categoria válido!")
+            tipo = str(input("Qual o tipo da categoria? [RECEITA|DESPESA]"))
             tiposCategoriaCorrigido = removerAcento(tipo)
 
-            if tiposCategoriaCorrigido not in tiposCategoria:
-                print("Caro usuário, digite um tipo de categoria válido!")
-                tipo = str(input("Qual o tipo da categoria? [RECEITA|DESPESA]"))
-                tiposCategoriaCorrigido = removerAcento(tipo)
-
-            if tiposCategoriaCorrigido == "RECEITA":
+        if tiposCategoriaCorrigido == "RECEITA":
+            categoria = str(
+                input(
+                    "Qual categoria você deseja atribuir à transação: [SALARIO, VENDAS DE PRODUTOS, PRESTACAO DE SERVICOS, INVESTIMENTOS, REEMBOLSOS, OUTRAS RECEITAS]"
+                ).upper()
+            )
+            categoriaCorrigida = removerAcento(categoria)
+            if categoriaCorrigida not in categoriasReceitas:
+                print(
+                    "Caro usuário, por favor insira uma categoria válida para o tipo receitas"
+                )
                 categoria = str(
                     input(
                         "Qual categoria você deseja atribuir à transação: [SALARIO, VENDAS DE PRODUTOS, PRESTACAO DE SERVICOS, INVESTIMENTOS, REEMBOLSOS, OUTRAS RECEITAS]"
                     ).upper()
                 )
                 categoriaCorrigida = removerAcento(categoria)
-                if categoriaCorrigida not in categoriasReceitas:
-                    print(
-                        "Caro usuário, por favor insira uma categoria válida para o tipo receitas"
-                    )
-                    categoria = str(
-                        input(
-                            "Qual categoria você deseja atribuir à transação: [SALARIO, VENDAS DE PRODUTOS, PRESTACAO DE SERVICOS, INVESTIMENTOS, REEMBOLSOS, OUTRAS RECEITAS]"
-                        ).upper()
-                    )
-                    categoriaCorrigida = removerAcento(categoria)
 
-            if tiposCategoriaCorrigido == "DESPESA":
+        if tiposCategoriaCorrigido == "DESPESA":
+            categoria = str(
+                input(
+                    "Qual categoria você deseja atribuir  à transação: [ALIMENTACAO, MORADIA, TRANSPORTE, SAUDE, EDUCACAO, LAZER, ROUPAS, HIGIENE PESSOAL, CONTAS, IMPOSTOS, DOACOES]"
+                ).upper()
+            )
+            categoria = removerAcento(categoria)
+            if categoriaCorrigida not in categoriasDespesas:
+                print(
+                    "Caro usuário, por favor insira uma categoria válida para o tipo despesas"
+                )
                 categoria = str(
                     input(
                         "Qual categoria você deseja atribuir  à transação: [ALIMENTACAO, MORADIA, TRANSPORTE, SAUDE, EDUCACAO, LAZER, ROUPAS, HIGIENE PESSOAL, CONTAS, IMPOSTOS, DOACOES]"
                     ).upper()
                 )
-                categoria = removerAcento(categoria)
-                if categoriaCorrigida not in categoriasDespesas:
-                    print(
-                        "Caro usuário, por favor insira uma categoria válida para o tipo despesas"
-                    )
-                    categoria = str(
-                        input(
-                            "Qual categoria você deseja atribuir  à transação: [ALIMENTACAO, MORADIA, TRANSPORTE, SAUDE, EDUCACAO, LAZER, ROUPAS, HIGIENE PESSOAL, CONTAS, IMPOSTOS, DOACOES]"
-                        ).upper()
-                    )
-                    categoriaCorrigida = removerAcento(categoria)
-            dataframe.iloc[indice][coluna] = categoriaCorrigida
-            print("Categoria alterada com sucesso")
-            print(dataframe.iloc[indice])
+                categoriaCorrigida = removerAcento(categoria)
+        dataframe.iloc[indice, coluna] = categoriaCorrigida
+        print("Categoria alterada com sucesso")
+        print(dataframe.iloc[indice])
 
-        if colunaCorrigida == "CONTA":
-            contas = [
-                "CONTA CORRENTE",
-                "CONTA POUPANCA",
-                "DINHEIRO VIVO",
-                "CARTAO DE CREDITO",
-                "INVESTIMENTOS",
-                "CARTEIRA DIGITAL",
-                "OUTROS",
-            ]
+    if colunaCorrigida == "CONTA":
+        contas = [
+            "CONTA CORRENTE",
+            "CONTA POUPANCA",
+            "DINHEIRO VIVO",
+            "CARTAO DE CREDITO",
+            "INVESTIMENTOS",
+            "CARTEIRA DIGITAL",
+            "OUTROS",
+        ]
+        conta = str(
+            input(
+                "Qual tipo de conta você deseja atribuir à esta transação: [CONTA CORRENTE, CONTA POUPANÇA, DINHEIRO VIVO, CARTAO DE CREDITO, INVESTIMENTOS, CARTEIRA DIGITAL, OUTROS]"
+            ).upper()
+        )
+        contaCorrigida = removerAcento(conta)
+        if contaCorrigida not in contas:
+            print("Caro usuário, por favor insira um tipo de conta válido! ")
             conta = str(
                 input(
-                    "Qual tipo de conta você deseja atribuir à esta transação: [CONTA CORRENTE, CONTA POUPANÇA, DINHEIRO VIVO, CARTAO DE CREDITO, INVESTIMENTOS, CARTEIRA DIGITAL, OUTROS]"
+                    "Qual tipo de conta você deseja atribuir à esta transação: [CONTA CORRENTE, CONTA POUPANCA, DINHEIRO VIVO, CARTAO DE CREDITO, INVESTIMENTOS, CARTEIRA DIGITAL, OUTROS]"
                 ).upper()
             )
             contaCorrigida = removerAcento(conta)
-            if contaCorrigida not in contas:
-                print("Caro usuário, por favor insira um tipo de conta válido! ")
-                conta = str(
-                    input(
-                        "Qual tipo de conta você deseja atribuir à esta transação: [CONTA CORRENTE, CONTA POUPANCA, DINHEIRO VIVO, CARTAO DE CREDITO, INVESTIMENTOS, CARTEIRA DIGITAL, OUTROS]"
-                    ).upper()
-                )
-                contaCorrigida = removerAcento(conta)
-            dataframe.iloc[indice][coluna] = contaCorrigida
-            print("Categoria alterada com sucesso")
-            print(dataframe.iloc[indice])
+        dataframe.loc[indice, coluna] = contaCorrigida
+        print("Categoria alterada com sucesso")
+        print(dataframe.iloc[indice])
 
-        if colunaCorrigida == "VALOR":
-            while True:
-                try:
+    if colunaCorrigida == "VALOR":
+        while True:
+            try:
+                valor = float(
+                    input("Qual valor você deseja atribuir à esta transação? ")
+                )
+                if valor == 0:
+                    print(
+                        "Caro usuário, valores neutros são inválidos! Por favor, insira um valor maior ou menor que zero"
+                    )
                     valor = float(
                         input("Qual valor você deseja atribuir à esta transação? ")
                     )
-                    if valor == 0:
-                        print(
-                            "Caro usuário, valores neutros são inválidos! Por favor, insira um valor maior ou menor que zero"
-                        )
-                        valor = float(
-                            input("Qual valor você deseja atribuir à esta transação? ")
-                        )
-                    else:
-                        dataframe.iloc[indice][coluna] = valor
-                        print("Valor alterado com sucesso!")
-                        print(dataframe.iloc[indice])
-                except ValueError:
-                    print("Caro usuário, insira um valor numérico!")
+                else:
+                    dataframe.loc[indice, coluna] = valor
+                    print("Valor alterado com sucesso!")
+                    print(dataframe.iloc[indice])
+            except ValueError:
+                print("Caro usuário, insira um valor numérico!")
 
-        if colunaCorrigida == "FORMA DE PAGAMENTO":
-            pagamentos = [
-                "DINHEIRO",
-                "CARTAO DE DEBITO",
-                "CARTÃO DE CREDITO",
-                "PIX",
-                "TRANSFERENCIA",
-                "TED",
-                "DOC",
-                "CHEQUE",
-                "PAYPAL",
-                "PICPAY",
-                "MERCADO PAGO",
-                "GOOGLE PAY",
-                "APPLE PAY",
-                "CRYPTO",
-            ]
+    if colunaCorrigida == "FORMA DE PAGAMENTO":
+        pagamentos = [
+            "DINHEIRO",
+            "CARTAO DE DEBITO",
+            "CARTÃO DE CREDITO",
+            "PIX",
+            "TRANSFERENCIA",
+            "TED",
+            "DOC",
+            "CHEQUE",
+            "PAYPAL",
+            "PICPAY",
+            "MERCADO PAGO",
+            "GOOGLE PAY",
+            "APPLE PAY",
+            "CRYPTO",
+        ]
+        pagamento = str(
+            input(
+                "Insira a forma de pagamento da transação: [DINHEIRO, CARTAO DE DEBITO, CARTAO DE CREDITO, PIX, TRANSFERENCIA, TED, DOC, CHEQUE, PAYPAL, PICPAY, MERCADO PAGO, GOOGLE PAY, APPLE PAY, CRYPTO]"
+            ).upper()
+        )
+        pagamentoCorrigido = removerAcento(pagamento)
+        if pagamentoCorrigido not in pagamentos:
+            print("Caro usuário, insira uma forma de pagamento válida")
             pagamento = str(
                 input(
                     "Insira a forma de pagamento da transação: [DINHEIRO, CARTAO DE DEBITO, CARTAO DE CREDITO, PIX, TRANSFERENCIA, TED, DOC, CHEQUE, PAYPAL, PICPAY, MERCADO PAGO, GOOGLE PAY, APPLE PAY, CRYPTO]"
                 ).upper()
             )
             pagamentoCorrigido = removerAcento(pagamento)
-            if pagamentoCorrigido not in pagamentos:
-                print("Caro usuário, insira uma forma de pagamento válida")
-                pagamento = str(
-                    input(
-                        "Insira a forma de pagamento da transação: [DINHEIRO, CARTAO DE DEBITO, CARTAO DE CREDITO, PIX, TRANSFERENCIA, TED, DOC, CHEQUE, PAYPAL, PICPAY, MERCADO PAGO, GOOGLE PAY, APPLE PAY, CRYPTO]"
-                    ).upper()
-                )
-                pagamentoCorrigido = removerAcento(pagamento)
-            dataframe.iloc[indice][coluna] = pagamentoCorrigido
-            print("Forma de pagamento alterada com sucesso! ")
-            print(dataframe.iloc[indice])
-        if colunaCorrigida == "TAG":
-            tipoTransacao = tipoTransaction()
-            categoriaTransacao = category(tipoTransacao)
-            tag = tags(tipoTransacao, categoriaTransacao)
-            dataframe.iloc[indice][colunaCorrigida] = tag
-        if colunaCorrigida == "CRIADO EM":
-            print(
-                "Caro usuário, por motivos de segurança não podemos alterar o criado em"
-            )
+        dataframe.loc[indice, coluna] = pagamentoCorrigido
+        print("Forma de pagamento alterada com sucesso! ")
+        print(dataframe.iloc[indice])
+    if colunaCorrigida == "TAG":
+        tipoTransacao = tipoTransaction()
+        categoriaTransacao = category(tipoTransacao)
+        tag = tags(tipoTransacao, categoriaTransacao)
+        dataframe.loc[indice][colunaCorrigida] = tag
+        print('Tag alterada com sucesso! ')
+        print(dataframe.iloc[indice])
+    if colunaCorrigida == "CRIADO EM":
+        print(
+            "Caro usuário, por motivos de segurança não podemos alterar o criado em"
+        )
+
